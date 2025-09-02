@@ -9,7 +9,7 @@ import PolaroidCard from './components/PolaroidCard';
 import { createAlbumPage } from './lib/albumUtils';
 import Footer from './components/Footer';
 
-const DECADES = ['1950s', '1960s', '1970s', '1980s', '1990s', '2000s', '2010s', '2020s'];
+const DECADES = ['1950s', '1960s', '1970s', '1980s', '1990s', '2000s', '2010s', '2020s', '2030s'];
 
 // Pre-defined positions for a scattered look on desktop
 const POSITIONS = [
@@ -21,6 +21,7 @@ const POSITIONS = [
     { top: '50%', left: '38%', rotate: -3 },
     { top: '60%', left: '20%', rotate: 12 },
     { top: '65%', left: '65%', rotate: -10 },
+    { top: '75%', left: '45%', rotate: 8 },
 ];
 
 const GHOST_POLAROIDS_CONFIG = [
@@ -32,6 +33,7 @@ const GHOST_POLAROIDS_CONFIG = [
   { initial: { x: "100%", y: "150%", rotate: 10 }, transition: { delay: 0.3 } },
   { initial: { x: "-180%", y: "50%", rotate: -15 }, transition: { delay: 0.7 } },
   { initial: { x: "160%", y: "-120%", rotate: 35 }, transition: { delay: 0.9 } },
+  { initial: { x: "-100%", y: "150%", rotate: -10 }, transition: { delay: 1.0 } },
 ];
 
 
@@ -60,16 +62,10 @@ const useMediaQuery = (query: string) => {
 };
 
 const getPromptForDecade = (decade: string): string => {
-    switch (decade) {
-        case '2000s':
-            return "Reimagine the person in this photo in an iconic 2000s outfit. Think Y2K fashion: low-rise jeans, a crop top, and maybe a trucker hat. Capture the photo quality and aesthetic of the early 2000s. The output must be a photorealistic image showing the person and their outfit clearly.";
-        case '2010s':
-            return "Reimagine the person in this photo with a classic 2010s outfit. Consider hipster or indie styles like skinny jeans, a flannel shirt, and beanie. The photo should have the look of an early Instagram post, complete with a filter. The output must be a photorealistic image showing the person and their outfit clearly.";
-        case '2020s':
-            return "Reimagine the person in this photo wearing a trendy 2020s outfit. Focus on modern streetwear or e-girl/e-boy styles, with high-waisted pants or cargo pants and an oversized top. The photo should look like it was taken on a modern smartphone. The output must be a photorealistic image showing the person and their outfit clearly.";
-        default:
-            return `Reimagine the person in this photo in the style of the ${decade}. This includes clothing, hairstyle, photo quality, and the overall aesthetic of that decade. The output must be a photorealistic image showing the person clearly.`;
+    if (decade === '2030s') {
+        return `Reimagine the person in this photo in the style of the ${decade}, with a touch of near-future sci-fi. This includes sleek, minimalist clothing, perhaps with subtle integrated tech, a modern hairstyle, and a high-resolution photo quality. The output must be a photorealistic image showing the person clearly.`;
     }
+    return `Reimagine the person in this photo in the style of the ${decade}. This includes clothing, hairstyle, photo quality, and the overall aesthetic of that decade. The output must be a photorealistic image showing the person clearly.`;
 };
 
 function App() {

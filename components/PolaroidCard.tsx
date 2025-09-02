@@ -49,6 +49,7 @@ const Placeholder = () => (
 
 
 const PolaroidCard: React.FC<PolaroidCardProps> = ({ imageUrl, caption, status, error, dragConstraintsRef, onShake, onDownload, isMobile }) => {
+    const isModern = ['2010s', '2020s', '2030s'].includes(caption);
     const [isDeveloped, setIsDeveloped] = useState(false);
     const [isImageLoaded, setIsImageLoaded] = useState(false);
     const lastShakeTime = useRef(0);
@@ -107,7 +108,11 @@ const PolaroidCard: React.FC<PolaroidCardProps> = ({ imageUrl, caption, status, 
 
     const cardInnerContent = (
         <>
-            <div className="w-full bg-neutral-900 shadow-inner flex-grow relative overflow-hidden group">
+            <div className={cn(
+                "w-full bg-neutral-900 shadow-inner flex-grow relative overflow-hidden group",
+                // This adds an inset border for modern decades to act as a "digital frame"
+                isModern && "ring-2 ring-inset ring-white/20"
+            )}>
                 {status === 'pending' && <LoadingSpinner />}
                 {status === 'error' && <ErrorDisplay />}
                 {status === 'done' && imageUrl && (
