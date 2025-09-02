@@ -59,6 +59,19 @@ const useMediaQuery = (query: string) => {
     return matches;
 };
 
+const getPromptForDecade = (decade: string): string => {
+    switch (decade) {
+        case '2000s':
+            return "Reimagine the person in this photo in an iconic 2000s outfit. Think Y2K fashion: low-rise jeans, a crop top, and maybe a trucker hat. Capture the photo quality and aesthetic of the early 2000s. The output must be a photorealistic image showing the person and their outfit clearly.";
+        case '2010s':
+            return "Reimagine the person in this photo with a classic 2010s outfit. Consider hipster or indie styles like skinny jeans, a flannel shirt, and beanie. The photo should have the look of an early Instagram post, complete with a filter. The output must be a photorealistic image showing the person and their outfit clearly.";
+        case '2020s':
+            return "Reimagine the person in this photo wearing a trendy 2020s outfit. Focus on modern streetwear or e-girl/e-boy styles, with high-waisted pants or cargo pants and an oversized top. The photo should look like it was taken on a modern smartphone. The output must be a photorealistic image showing the person and their outfit clearly.";
+        default:
+            return `Reimagine the person in this photo in the style of the ${decade}. This includes clothing, hairstyle, photo quality, and the overall aesthetic of that decade. The output must be a photorealistic image showing the person clearly.`;
+    }
+};
+
 function App() {
     const [uploadedImage, setUploadedImage] = useState<string | null>(null);
     const [generatedImages, setGeneratedImages] = useState<Record<string, GeneratedImage>>({});
@@ -99,7 +112,7 @@ function App() {
 
         const processDecade = async (decade: string) => {
             try {
-                const prompt = `Reimagine the person in this photo in the style of the ${decade}. This includes clothing, hairstyle, photo quality, and the overall aesthetic of that decade. The output must be a photorealistic image showing the person clearly.`;
+                const prompt = getPromptForDecade(decade);
                 const resultUrl = await generateDecadeImage(uploadedImage, prompt);
                 setGeneratedImages(prev => ({
                     ...prev,
@@ -148,7 +161,7 @@ function App() {
 
         // Call the generation service for the specific decade
         try {
-            const prompt = `Reimagine the person in this photo in the style of the ${decade}. This includes clothing, hairstyle, photo quality, and the overall aesthetic of that decade. The output must be a photorealistic image showing the person clearly.`;
+            const prompt = getPromptForDecade(decade);
             const resultUrl = await generateDecadeImage(uploadedImage, prompt);
             setGeneratedImages(prev => ({
                 ...prev,
